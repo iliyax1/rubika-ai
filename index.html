@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rubika AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#0f1117;color:#f5f7fb}
+.app{max-width:900px;height:100vh;margin:auto;display:flex;flex-direction:column;background:#171a22}
+header{padding:16px 20px;border-bottom:1px solid #292e39;display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#ffffff14;font-size:22px}
+h1{font-size:18px;margin:0}.status{font-size:12px;color:#9aa3b2;margin-top:4px}
+.chat{flex:1;overflow:auto;padding:24px 16px}.msg{display:flex;margin:12px 0}.msg.user{justify-content:flex-start}.msg.ai{justify-content:flex-end}
+.bubble{max-width:78%;padding:12px 15px;border-radius:16px;line-height:1.8;white-space:pre-wrap}
+.user .bubble{background:#2855d9}.ai .bubble{background:#242936}
+.composer{padding:14px;border-top:1px solid #292e39;display:flex;gap:10px;background:#171a22}
+textarea{flex:1;resize:none;min-height:48px;max-height:130px;border:1px solid #343a48;border-radius:14px;background:#0f1117;color:#fff;padding:12px;font:inherit;outline:none}
+button{border:0;border-radius:14px;padding:0 20px;background:#3b66e8;color:white;font:inherit;cursor:pointer}
+button:disabled{opacity:.5}
+.note{text-align:center;color:#727b8b;font-size:11px;padding:5px 0 10px}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="logo">🤖</div>
+  <div><h1>Rubika AI</h1><div class="status">نسخه اولیه چت هوش مصنوعی</div></div>
+</header>
+<main id="chat" class="chat">
+  <div class="msg ai"><div class="bubble">سلام ایلیا 👋
+من نسخه اولیه Rubika AI هستم. پیامت رو بنویس تا پاسخ آزمایشی بدم.</div></div>
+</main>
+<div class="note">این نسخه نمایشی است و هنوز به API واقعی هوش مصنوعی وصل نشده.</div>
+<form id="form" class="composer">
+  <textarea id="input" placeholder="پیامت را بنویس..." rows="1"></textarea>
+  <button id="send" type="submit">ارسال</button>
+</form>
+</div>
+<script>
+const chat=document.getElementById('chat'), input=document.getElementById('input'), form=document.getElementById('form'), send=document.getElementById('send');
+function add(text,type){const m=document.createElement('div');m.className='msg '+type;const b=document.createElement('div');b.className='bubble';b.textContent=text;m.appendChild(b);chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
+form.addEventListener('submit',e=>{
+ e.preventDefault(); const text=input.value.trim(); if(!text)return;
+ add(text,'user'); input.value=''; send.disabled=true;
+ setTimeout(()=>{add('پیامت دریافت شد ✅\\nبرای پاسخ واقعی باید این سایت را به API هوش مصنوعی وصل کنیم.','ai');send.disabled=false;input.focus()},500);
+});
+input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();form.requestSubmit()}});
+</script>
+</body>
+</html>
